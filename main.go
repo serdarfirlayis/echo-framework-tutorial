@@ -5,6 +5,17 @@ import (
 	"net/http"
 )
 
+type login int
+type welcome int
+
+func (l login) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "on login page")
+}
+
+func (wl welcome) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "on welcome page")
+}
+
 /*
 type Handler interface {
 	ServeHTTP(ResponseWriter, *Request)
@@ -37,8 +48,14 @@ func mywelcome(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/login", mylogin)
-	http.HandleFunc("/welcome/", mywelcome)
+	// http.HandleFunc("/login", mylogin)
+	// http.HandleFunc("/welcome/", mywelcome)
+	// http.Handle("/login", http.HandlerFunc(mylogin))
+	// http.Handle("/welcome/", http.HandlerFunc(mywelcome))
+	var i login
+	var j welcome
+	http.Handle("/login", i)
+	http.Handle("/welcome/", j)
 	fmt.Println("Listening on port 8080...")
 	http.ListenAndServe("localhost:8080", nil)
 }
