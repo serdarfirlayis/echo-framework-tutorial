@@ -9,6 +9,7 @@ import (
 )
 
 func main() {
+	// terminal command: export MY_APP_PORT=4000
 	port := os.Getenv("MY_APP_PORT")
 	if port == "" {
 		port = "8080"
