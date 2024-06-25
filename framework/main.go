@@ -22,6 +22,10 @@ func main() {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
 
+	e.GET("/products", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, proucts)
+	})
+
 	e.GET("/products/:id", func(c echo.Context) error {
 		var product map[int]string
 
@@ -42,7 +46,21 @@ func main() {
 		}
 		return c.JSON(http.StatusOK, product)
 	})
-	e.Logger.Print(fmt.Sprint("Listening on port %s", port))
+
+	e.POST("/products", func(c echo.Context) error {
+		type body struct {
+			Name string `json:"product_name"`
+		}
+		var reqBody body
+		if err := c.Bind(&reqBody); err != nil {
+			return err
+		}
+		product := map[int]string{len(proucts) + 1: reqBody.Name}
+		proucts = append(proucts, product)
+		return c.JSON(http.StatusOK, product)
+	})
+
+	e.Logger.Print(fmt.Sprintf("Listening on port %s", port))
 	e.Logger.Fatal(e.Start(fmt.Sprintf("localhost:%s", port)))
 
 	/*
