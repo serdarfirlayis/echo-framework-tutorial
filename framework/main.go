@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"os"
@@ -16,6 +17,7 @@ func main() {
 	}
 
 	e := echo.New()
+	v := validator.New()
 	proucts := []map[int]string{{1: "mobile"}, {2: "tv"}, {3: "laptop"}}
 
 	e.GET("/", func(c echo.Context) error {
@@ -49,10 +51,13 @@ func main() {
 
 	e.POST("/products", func(c echo.Context) error {
 		type body struct {
-			Name string `json:"product_name"`
+			Name string `json:"product_name" validate:"required,min=4"`
 		}
 		var reqBody body
 		if err := c.Bind(&reqBody); err != nil {
+			return err
+		}
+		if err := v.Struct(reqBody); err != nil {
 			return err
 		}
 		product := map[int]string{len(proucts) + 1: reqBody.Name}
