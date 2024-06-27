@@ -9,6 +9,16 @@ import (
 	"strconv"
 )
 
+// ProductValidator echo validator for product
+type ProductValidator struct {
+	validator *validator.Validate
+}
+
+// Validate validates product request body
+func (p *ProductValidator) Validate(i interface{}) error {
+	return p.validator.Struct(i)
+}
+
 func main() {
 	// terminal command: export MY_APP_PORT=4000
 	port := os.Getenv("MY_APP_PORT")
@@ -54,12 +64,16 @@ func main() {
 			Name string `json:"product_name" validate:"required,min=4"`
 		}
 		var reqBody body
+		e.Validator = &ProductValidator{validator: v}
 		if err := c.Bind(&reqBody); err != nil {
 			return err
 		}
-		if err := v.Struct(reqBody); err != nil {
+		if err := c.Validate(reqBody); err != nil {
 			return err
 		}
+		/* if err := v.Struct(reqBody); err != nil {
+			return err
+		} */
 		product := map[int]string{len(proucts) + 1: reqBody.Name}
 		proucts = append(proucts, product)
 		return c.JSON(http.StatusOK, product)
