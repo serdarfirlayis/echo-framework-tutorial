@@ -1,31 +1,28 @@
 package storage
 
 import (
+	"github.com/serdarfirlayis/echo-framework-tutorial.git/postgres-connection-basics/config"
 	"log"
 
-	"github.com/serdarfirlayis/echo-framework-tutorial.git/postgres-connection-basics/config"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 var DB *gorm.DB
 
-func NewDB(params ...string) *gorm.DB {
+func NewDB() *gorm.DB {
 	var err error
-
-	conString := config.GetPostgresConnectionString()
-	log.Print(conString)
-
-	dialector := postgres.Open(conString)
-
-	DB, err := gorm.Open(dialector, &gorm.Config{})
+	dsn := config.GetPostgresConnectionString()
+	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Panic(err)
+		log.Panicf("failed to connect database: %v", err)
 	}
-
 	return DB
 }
 
 func GetDBInstance() *gorm.DB {
+	if DB == nil {
+		log.Panic("Database connection is not initialized")
+	}
 	return DB
 }

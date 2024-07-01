@@ -14,7 +14,7 @@ func GetStudents(c echo.Context) error {
 
 func GetRepoStudents() ([]model.Students, error) {
 	db := storage.GetDBInstance()
-	students := []model.Students{}
+	var students []model.Students
 
 	if err := db.Find(&students).Error; err != nil {
 		return nil, err
