@@ -3,7 +3,7 @@ package storage
 import (
 	"log"
 
-	"github.com/serdarfirlayis/echo-framework-tutorial.git/postgres-hello-world/config"
+	"github.com/serdarfirlayis/echo-framework-tutorial.git/postgres-connection-basics/config"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -23,5 +23,9 @@ func NewDB(params ...string) *gorm.DB {
 		log.Panic(err)
 	}
 
+	return DB
+}
+
+func GetDBInstance() *gorm.DB {
 	return DB
 }

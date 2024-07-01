@@ -1,3 +1,6 @@
 # Golang Echo Framework Tutorial
 
-This repository was created while following the lessons in [Build REST API in Golang using Echo web framework](https://www.youtube.com/playlist?list=PLhyfDOou2eQ1AJsAIRqaEUwx0blZ0UKG2) playlist.
+## How to Use
+Each project has its own folder, and there's a README file in each folder that provides detailed usage instructions for 
+that specific project. To access more information about a project, navigate to the project's folder and read the README 
+file.
