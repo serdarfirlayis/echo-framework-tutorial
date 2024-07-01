@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/serdarfirlayis/echo-framework-tutorial.git/postgres-connection-basics/controller"
 	"github.com/serdarfirlayis/echo-framework-tutorial.git/postgres-connection-basics/storage"
