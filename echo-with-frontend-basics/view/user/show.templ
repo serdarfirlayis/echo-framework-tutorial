@@ -1,5 +1,12 @@
 package user
 
-templ Show() {
-	<h1>hello from the user page</h1>
+import (
+    "github.com/serdarfirlayis/echo-framework-tutorial.git/echo-with-frontend-basics/view/layout"
+    "github.com/serdarfirlayis/echo-framework-tutorial.git/echo-with-frontend-basics/model"
+)
+
+templ Show(user model.User) {
+    @layout.Base() {
+	    <h1>hello {user.Email} from the user page</h1>
+    }
 }
